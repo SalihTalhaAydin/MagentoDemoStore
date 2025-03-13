@@ -56,9 +56,8 @@ export default class SearchResultsPage extends BasePage {
    * @param option - Sort option (e.g. 'Price: Low to High')
    */
   async sortProductsBy(option: string): Promise<void> {
-    await this.clickElement(this.sortByDropdown);
-    await this.page.selectOption('#sorter', { label: option });
-    await this.waitForNavigation();
+    await this.page.getByLabel('Sort By').selectOption(option)
+    await this.waitForURLToContain(`product_list_order=${option}`)
   }
 
   /**

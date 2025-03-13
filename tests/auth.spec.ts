@@ -119,7 +119,7 @@ test.describe("Authentication Tests", () => {
     expect(isLoggedIn).toBeFalsy();
   });
 
-  test("User can access and update account information", async ({ page }) => {
+  test("User can access and update password", async ({ page }) => {
     // Arrange
     const homePage = new HomePage(page);
     const authPage = new AuthPage(page);

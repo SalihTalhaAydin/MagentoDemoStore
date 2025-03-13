@@ -8,7 +8,7 @@ export class TestData {
   static generateCustomer() {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
-    const email = faker.internet.email(firstName, lastName, 'example.com').toLowerCase();
+    const email = `user${faker.datatype.uuid()}@testemail.com`;
     
     return {
       firstName,

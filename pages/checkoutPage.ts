@@ -28,7 +28,7 @@ export default class CheckoutPage extends BasePage {
     super(page);
     
     // Shipping form
-    this.emailInput = page.locator('#customer-email');
+    this.emailInput = page.getByRole('textbox', { name: 'Email Address * Email Address' });
     this.firstNameInput = page.locator('input[name="firstname"]');
     this.lastNameInput = page.locator('input[name="lastname"]');
     this.streetAddressInput = page.locator('input[name="street[0]"]');
@@ -89,8 +89,6 @@ export default class CheckoutPage extends BasePage {
    */
   async goToPaymentMethod(): Promise<void> {
     await this.clickElement(this.nextButton);
-    // Wait for payment methods to be visible
-    await this.waitForElement(this.paymentMethods.first(), 10000);
   }
 
   /**
@@ -98,6 +96,8 @@ export default class CheckoutPage extends BasePage {
    * @param index - Payment method index (0-based)
    */
   async selectPaymentMethod(index: number = 0): Promise<void> {
+    // Wait for payment methods to be visible
+    await this.waitForElement(this.paymentMethods.first(), 10000);
     await this.clickElement(this.paymentMethods.nth(index));
   }
 
@@ -145,23 +145,21 @@ export default class CheckoutPage extends BasePage {
     },
     shippingMethodIndex: number = 0,
     paymentMethodIndex: number = 0
-  ): Promise<string> {
+  ): Promise<void> {
     // Fill shipping information
     await this.fillShippingInfo(customerInfo);
     
     // Select shipping method
     await this.selectShippingMethod(shippingMethodIndex);
     
+    
     // Go to payment method
     await this.goToPaymentMethod();
     
-    // Select payment method
-    await this.selectPaymentMethod(paymentMethodIndex);
+    //TODO PAYMENT METHOD IS NOT IMPLMENTED YET
+    //await this.selectPaymentMethod(paymentMethodIndex);
     
     // Place order
     await this.placeOrder();
-    
-    // Return order number
-    return await this.getOrderNumber();
   }
 }

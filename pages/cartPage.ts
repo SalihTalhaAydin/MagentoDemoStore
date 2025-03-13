@@ -23,13 +23,13 @@ export default class CartPage extends BasePage {
     this.cartItems = page.locator('.cart.item');
     this.cartItemName = page.locator('.product-item-name');
     this.cartItemPrice = page.locator('.price');
-    this.cartItemQty = page.locator('.qty');
+    this.cartItemQty = page.locator('[class="input-text qty"]');
     this.cartItemSubtotal = page.locator('.subtotal .price');
     this.removeItemButton = page.locator('.action-delete');
     this.updateCartButton = page.locator('.update');
     this.emptyCartButton = page.locator('#empty_cart_button');
     this.cartSubtotal = page.locator('.subtotal .price');
-    this.proceedToCheckoutButton = page.locator('#top-cart-btn-checkout, .checkout-methods-items .action.primary.checkout');
+    this.proceedToCheckoutButton = page.getByRole('button', { name: 'Proceed to Checkout' });
     this.emptyCartMessage = page.locator('.cart-empty');
     this.continueShopping = page.locator('.action.continue');
     this.applyDiscountCodeButton = page.locator('.action.apply.primary');
@@ -60,10 +60,12 @@ export default class CartPage extends BasePage {
    * @param index - Item index (0-based)
    * @param quantity - New quantity
    */
-  async updateItemQuantity(index: number, quantity: number): Promise<void> {
+  async updateItemQuantity(index: number, quantity: number): Promise<string> {
     await this.fillText(this.cartItemQty.nth(index), quantity.toString());
     await this.clickElement(this.updateCartButton);
     await this.waitForNavigation();
+    const updatedQuantity = await this.cartItemQty.nth(index).getAttribute('value');
+    return updatedQuantity?.trim() ?? '-1';
   }
 
   /**

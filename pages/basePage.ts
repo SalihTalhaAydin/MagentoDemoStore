@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator, expect } from "@playwright/test";
 
 export default class BasePage {
   readonly page: Page;
@@ -29,7 +29,7 @@ export default class BasePage {
    * @param timeout - Timeout in milliseconds (optional)
    */
   async waitForElement(locator: Locator, timeout?: number): Promise<void> {
-    await locator.waitFor({ state: 'visible', timeout });
+    await locator.waitFor({ state: "visible", timeout });
   }
 
   /**
@@ -37,7 +37,10 @@ export default class BasePage {
    * @param locator - Element locator
    * @param options - Click options (optional)
    */
-  async clickElement(locator: Locator, options?: { force?: boolean, timeout?: number }): Promise<void> {
+  async clickElement(
+    locator: Locator,
+    options?: { force?: boolean; timeout?: number }
+  ): Promise<void> {
     try {
       await locator.click(options);
     } catch (error) {
@@ -61,7 +64,7 @@ export default class BasePage {
    * @returns Text content as string
    */
   async getText(locator: Locator): Promise<string> {
-    return await locator.textContent() || '';
+    return (await locator.textContent()) || "";
   }
 
   /**
@@ -77,14 +80,21 @@ export default class BasePage {
    * Wait for navigation to complete
    */
   async waitForNavigation(): Promise<void> {
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState("networkidle");
   }
 
-   /**
+  /**
    * Wait for navigation to complete
    */
-   async waitForDomContent(): Promise<void> {
-    await this.page.waitForLoadState('domcontentloaded');
+  async waitForDomContent(): Promise<void> {
+    await this.page.waitForLoadState("domcontentloaded");
+  }
+
+  /**
+   * Wait for url to contain
+   */
+  async waitForURLToContain(keyword: string): Promise<void> {
+    await this.page.waitForURL(new RegExp(`${keyword}`, "i"));
   }
 
   /**
@@ -92,6 +102,9 @@ export default class BasePage {
    * @param name - Screenshot name
    */
   async takeScreenshot(name: string): Promise<void> {
-    await this.page.screenshot({ path: `./screenshots/${name}.png`, fullPage: true });
+    await this.page.screenshot({
+      path: `./screenshots/${name}.png`,
+      fullPage: true,
+    });
   }
 }
