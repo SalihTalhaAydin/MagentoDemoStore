@@ -23,10 +23,10 @@ export default class AuthPage extends BasePage {
     
     // Login form
     this.emailInput = page.locator('#email');
-    this.passwordInput = page.locator('#pass');
-    this.signInButton = page.locator('#send2');
+    this.passwordInput = page.locator('[title="Password"]');
+    this.signInButton = page.getByRole('button', { name: 'Sign In' });
     this.forgotPasswordLink = page.locator('a:has-text("Forgot Your Password?")');
-    this.loginErrorMessage = page.locator('.message-error');
+    this.loginErrorMessage = page.getByText('The account sign-in was');
     
     // Registration form
     this.firstNameInput = page.locator('#firstname');
@@ -47,7 +47,7 @@ export default class AuthPage extends BasePage {
     await this.fillText(this.emailInput, email);
     await this.fillText(this.passwordInput, password);
     await this.clickElement(this.signInButton);
-    await this.waitForNavigation();
+    await this.waitForDomContent();
   }
 
   /**

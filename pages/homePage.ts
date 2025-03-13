@@ -10,16 +10,18 @@ export default class HomePage extends BasePage {
   readonly accountMenuButton: Locator;
   readonly cartIcon: Locator;
   readonly welcomeMessage: Locator;
+  readonly headerWelcomeMessage: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.signInLink = page.locator('.authorization-link a');
-    this.createAccountLink = page.locator('a:has-text("Create an Account")');
+    this.signInLink = page.getByRole('link', { name: 'Sign In' });
+    this.createAccountLink = page.getByRole('link', { name: 'Create an Account' });
     this.searchBar = page.locator('#search');
     this.searchButton = page.locator('button[title="Search"]');
     this.accountMenuButton = page.locator('.action.switch');
     this.cartIcon = page.locator('.minicart-wrapper .action.showcart');
-    this.welcomeMessage = page.locator('.greet.welcome');
+    this.welcomeMessage = page.locator('[role="alert"] > div');
+    this.headerWelcomeMessage = page.getByRole('banner').getByText('Welcome, ', {exact: false});
   }
 
   /**
@@ -61,7 +63,8 @@ export default class HomePage extends BasePage {
    * @returns Boolean indicating if user is logged in
    */
   async isUserLoggedIn(): Promise<boolean> {
-    return await this.isElementVisible(this.welcomeMessage);
+    await this.waitForElement(this.headerWelcomeMessage);
+    return await this.isElementVisible(this.headerWelcomeMessage);
   }
 
   /**

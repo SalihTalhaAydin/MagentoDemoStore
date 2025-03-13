@@ -25,6 +25,7 @@ export default class AccountPage extends BasePage {
   readonly reorderLinks: Locator;
   
   // Edit account locators
+  readonly changePasswordCheckbox: Locator;
   readonly currentPasswordInput: Locator;
   readonly newPasswordInput: Locator;
   readonly confirmNewPasswordInput: Locator;
@@ -57,6 +58,7 @@ export default class AccountPage extends BasePage {
     this.reorderLinks = page.locator('a:has-text("Reorder")');
     
     // Edit account
+    this.changePasswordCheckbox = page.locator('#change-password')
     this.currentPasswordInput = page.locator('#current-password');
     this.newPasswordInput = page.locator('#password');
     this.confirmNewPasswordInput = page.locator('#password-confirmation');
@@ -117,6 +119,7 @@ export default class AccountPage extends BasePage {
    */
   async changePassword(currentPassword: string, newPassword: string): Promise<void> {
     await this.navigateToAccountInformation();
+    await this.clickElement(this.changePasswordCheckbox)
     await this.fillText(this.currentPasswordInput, currentPassword);
     await this.fillText(this.newPasswordInput, newPassword);
     await this.fillText(this.confirmNewPasswordInput, newPassword);

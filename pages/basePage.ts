@@ -80,6 +80,13 @@ export default class BasePage {
     await this.page.waitForLoadState('networkidle');
   }
 
+   /**
+   * Wait for navigation to complete
+   */
+   async waitForDomContent(): Promise<void> {
+    await this.page.waitForLoadState('domcontentloaded');
+  }
+
   /**
    * Take screenshot
    * @param name - Screenshot name
