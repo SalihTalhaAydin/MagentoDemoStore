@@ -24,7 +24,6 @@ This project contains automated tests for a Magento demo store using Playwright 
 
 ### 2. Product Search Tests
 - Search for products and verify results
-- Filter search results
 - Sort search results
 - Navigate to product detail page
 
@@ -32,13 +31,10 @@ This project contains automated tests for a Magento demo store using Playwright 
 - Add product to cart
 - Update cart quantity and remove items
 - Complete checkout process as guest
-- Verify cart subtotal calculation
 
 ### 4. Account Management Tests
 - View and navigate account dashboard
-- View order history
 - Update account information
-- Subscribe/unsubscribe from newsletter
 
 ## 🛠️ Setup & Installation
 
